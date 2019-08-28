@@ -10,25 +10,49 @@ import XCTest
 @testable import Vehicles
 
 class VehiclesTests: XCTestCase {
-
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    
+    func loadJson(filename fileName: String) -> [Vehicle]? {
+        if let url = Bundle.main.url(forResource: fileName, withExtension: "json") {
+            do {
+                let data = try Data(contentsOf: url)
+                let decoder = JSONDecoder()
+                let jsonData = try decoder.decode(Array<Vehicle>.self, from: data)
+                return jsonData
+            } catch {
+                print("error:\(error)")
+            }
         }
+        return nil
+    }
+
+    func testUnitVehicles() {
+        guard let vehicles = loadJson(filename: "vehicle_mock") else {
+            XCTFail("Error loading resource")
+            return
+        }
+        XCTAssert(vehicles.count > 0)
+    }
+
+    
+    
+    func testIntegerationFetchVehicles() {
+        let expectation = self.expectation(description: "Downloading")
+        VehicleAPI.shared.fetchVehicles(from: .vehicles) { (result: Result<Array<Vehicle>, VehicleAPI.APIServiceError>) in
+            switch result {
+            case .success(let vehicleResponce):
+                print(vehicleResponce)
+                XCTAssert(vehicleResponce.count > 0)
+                expectation.fulfill()
+            case .failure(let error):
+                print(error.localizedDescription)
+                
+                XCTFail("Error loading resource")
+                expectation.fulfill()
+            }
+        }
+        // Wait for the expectation to be fullfilled, or time out
+        // after 5 seconds. This is where the test runner will pause.
+        waitForExpectations(timeout: 5, handler: nil)
     }
 
 }
