@@ -24,6 +24,14 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var loadingLabel: UILabel!
     
+    var viewModels: [VehicleAnnotationModel] = [] {
+        didSet {
+            if let map = mapView {
+                self.showViehcles(map, annotatitons: viewModels)
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
@@ -36,7 +44,7 @@ class ViewController: UIViewController {
         VehicleAPI.shared.fetchVehicles(from: .vehicles) { (result: Result<Array<Vehicle>, VehicleAPI.APIServiceError>) in
             switch result {
             case .success(let vehicleResponce):
-                self.showViehicles(vehicles: vehicleResponce)
+                self.setViewModels(vehicles: vehicleResponce)
                 self.setLabeltext(text: ": )")
             case .failure(let error):
                 print(error.localizedDescription)
@@ -45,11 +53,11 @@ class ViewController: UIViewController {
         }
     }
     
-    func showViehicles(vehicles:[Vehicle]) {
-        mapView.addAnnotations(vehicles.compactMap{ VehicleAnnotationModel(vehicle: $0)})
-        mapView.reloadInputViews()
+    func setViewModels(vehicles:[Vehicle]) {
+        self.viewModels = vehicles.compactMap{ VehicleAnnotationModel(vehicle: $0)}
     }
     
+   
     func setLabeltext(text:String) {
         DispatchQueue.main.async {
              self.loadingLabel.text = text
@@ -69,6 +77,11 @@ extension ViewController {
 
 extension ViewController: MKMapViewDelegate {
     
+    func showViehcles(_ mapView: MKMapView, annotatitons:[VehicleAnnotationModel]) {
+        mapView.addAnnotations(viewModels)
+        mapView.reloadInputViews()
+    }
+
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard let annotation = annotation as? VehicleAnnotationModel else { return nil }
         let identifier = "vehicle"
