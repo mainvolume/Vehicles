@@ -7,9 +7,6 @@
 
 import Foundation
 
-struct Vehicles: Codable {
-    let vehicles: [Vehicle]
-}
 
 struct Vehicle: Codable {
     let id: Int
