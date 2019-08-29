@@ -62,7 +62,9 @@ class ViewController: UIViewController {
    
     func setLabeltext(text:String) {
         DispatchQueue.main.async {
-             self.loadingLabel.text = text
+            if let label = self.loadingLabel {
+                label.text = text
+            }
         }
     }
 }
