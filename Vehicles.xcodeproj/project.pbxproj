@@ -89,9 +89,8 @@
 			children = (
 				F0FB1A322316E4DE00F00CD2 /* VehicleAPI */,
 				F0FB1A312316E4D600F00CD2 /* Extensions */,
-				F0FB1A092316DDE400F00CD2 /* AppDelegate.swift */,
 				F0FB1A352316E95200F00CD2 /* ViewController */,
-				F0FB1A332316E81A00F00CD2 /* VehicleAnnotatitonModel.swift */,
+				F0FB1A092316DDE400F00CD2 /* AppDelegate.swift */,
 				F0FB1A0D2316DDE400F00CD2 /* Main.storyboard */,
 				F0FB1A102316DDE700F00CD2 /* Assets.xcassets */,
 				F0FB1A122316DDE700F00CD2 /* LaunchScreen.storyboard */,
@@ -130,6 +129,7 @@
 		F0FB1A352316E95200F00CD2 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				F0FB1A332316E81A00F00CD2 /* VehicleAnnotatitonModel.swift */,
 				F0FB1A0B2316DDE400F00CD2 /* ViewController.swift */,
 			);
 			path = ViewController;
