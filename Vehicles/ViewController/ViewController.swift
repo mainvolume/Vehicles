@@ -11,7 +11,6 @@ import CoreLocation
 import MapKit
 
 
-
 struct MapAttributes {
     static let initialLocation = CLLocation(latitude: 52.5200, longitude: 13.4050)
     static let regionRadius: CLLocationDistance = 3000
@@ -34,8 +33,11 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        mapView.delegate = self
-        centerMapOnLocation(location: MapAttributes.initialLocation)
+        
+        if let map = mapView {
+            map.delegate = self
+            centerLocationOn(map, location: MapAttributes.initialLocation)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -66,20 +68,17 @@ class ViewController: UIViewController {
 }
 
 
-extension ViewController {
-    
-    func centerMapOnLocation(location: CLLocation) {
-        let coordinateRegion = MKCoordinateRegion(center: location.coordinate,
-                                                  latitudinalMeters: MapAttributes.regionRadius, longitudinalMeters: MapAttributes.regionRadius)
-        mapView.setRegion(coordinateRegion, animated: true)
-    }
-}
-
 extension ViewController: MKMapViewDelegate {
     
     func showViehcles(_ mapView: MKMapView, annotatitons:[VehicleAnnotationModel]) {
         mapView.addAnnotations(annotatitons)
         mapView.reloadInputViews()
+    }
+    
+    func centerLocationOn(_ mapView: MKMapView, location: CLLocation) {
+        let coordinateRegion = MKCoordinateRegion(center: location.coordinate,
+                                                  latitudinalMeters: MapAttributes.regionRadius, longitudinalMeters: MapAttributes.regionRadius)
+        mapView.setRegion(coordinateRegion, animated: true)
     }
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -91,11 +90,10 @@ extension ViewController: MKMapViewDelegate {
             dequeuedView.annotation = annotation
             view = dequeuedView
         } else {
-            // 5
             view = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             view.canShowCallout = true
             view.calloutOffset = CGPoint(x: -5, y: 5)
-             view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+            view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         }
         return view
     }
