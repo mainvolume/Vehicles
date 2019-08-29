@@ -78,7 +78,7 @@ extension ViewController {
 extension ViewController: MKMapViewDelegate {
     
     func showViehcles(_ mapView: MKMapView, annotatitons:[VehicleAnnotationModel]) {
-        mapView.addAnnotations(viewModels)
+        mapView.addAnnotations(annotatitons)
         mapView.reloadInputViews()
     }
 
