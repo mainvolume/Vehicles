@@ -11,6 +11,8 @@ import XCTest
 
 class VehiclesTests: XCTestCase {
     
+    
+    
     func loadJson(filename fileName: String) -> [Vehicle]? {
         if let url = Bundle.main.url(forResource: fileName, withExtension: "json") {
             do {
@@ -37,7 +39,8 @@ class VehiclesTests: XCTestCase {
     
     func testIntegerationFetchVehicles() {
         let expectation = self.expectation(description: "Downloading")
-        VehicleAPI.shared.fetchVehicles(from: .vehicles) { (result: Result<Array<Vehicle>, VehicleAPI.APIServiceError>) in
+        let api = VehicleAPI()
+        api.fetch(from: .vehicles) { (result: Result<Array<Vehicle>, API.APIServiceError>) in
             switch result {
             case .success(let vehicleResponce):
                 print(vehicleResponce)

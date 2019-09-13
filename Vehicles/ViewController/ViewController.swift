@@ -14,19 +14,21 @@ import MapKit
 struct MapAttributes {
     static let initialLocation = CLLocation(latitude: 52.5200, longitude: 13.4050)
     static let regionRadius: CLLocationDistance = 3000
-   
+    
 }
 
 class ViewController: UIViewController {
-
+    
     @IBOutlet weak var mapView: MKMapView!
     
     @IBOutlet weak var loadingLabel: UILabel!
     
-    var viewModels: [VehicleAnnotationModel] = [] {
+    let api = VehicleAPI()
+    
+    var mapAnotaions: [VehicleAnnotationModel] = [] {
         didSet {
             if let map = mapView {
-                self.showViehcles(map, annotatitons: viewModels)
+                self.showViehcles(map, annotatitons: mapAnotaions)
             }
         }
     }
@@ -42,28 +44,21 @@ class ViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.setLabeltext(text: "Loading")
-        VehicleAPI.shared.fetchVehicles(from: .vehicles) { (result: Result<Array<Vehicle>, VehicleAPI.APIServiceError>) in
+        self.loadingLabel?.text = "loading"
+        api.fetch(from: .vehicles) { (result: Result<Array<Vehicle>, API.APIServiceError>) in
             switch result {
             case .success(let vehicleResponce):
-                self.setViewModels(vehicles: vehicleResponce)
-                self.setLabeltext(text: ": )")
+                print("Success: \(vehicleResponce)")
+                let annotations = vehicleResponce.map{ VehicleAnnotationModel(vehicle: $0)}
+                DispatchQueue.main.async {
+                    self.mapAnotaions = annotations
+                    self.loadingLabel?.text = "😍"
+                }
             case .failure(let error):
                 print(error.localizedDescription)
-                self.setLabeltext(text: "Error")
-            }
-        }
-    }
-    
-    func setViewModels(vehicles:[Vehicle]) {
-        self.viewModels = vehicles.compactMap{ VehicleAnnotationModel(vehicle: $0)}
-    }
-    
-   
-    func setLabeltext(text:String) {
-        DispatchQueue.main.async {
-            if let label = self.loadingLabel {
-                label.text = text
+                DispatchQueue.main.async {
+                    self.loadingLabel?.text = "Error"
+                }
             }
         }
     }
@@ -82,7 +77,7 @@ extension ViewController: MKMapViewDelegate {
                                                   latitudinalMeters: MapAttributes.regionRadius, longitudinalMeters: MapAttributes.regionRadius)
         mapView.setRegion(coordinateRegion, animated: true)
     }
-
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard let annotation = annotation as? VehicleAnnotationModel else { return nil }
         let identifier = "vehicle"
