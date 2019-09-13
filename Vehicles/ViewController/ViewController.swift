@@ -23,7 +23,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var loadingLabel: UILabel!
     
-    let api = VehicleAPI()
+    let vm = VeiclesManager()
     
     var mapAnotaions: [VehicleAnnotationModel] = [] {
         didSet {
@@ -44,21 +44,14 @@ class ViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.loadingLabel?.text = "loading"
-        api.fetch(from: .vehicles) { (result: Result<Array<Vehicle>, API.APIServiceError>) in
+        loadingLabel?.text = "loading"
+        vm.fetchVehicles { result in
             switch result {
-            case .success(let vehicleResponce):
-                print("Success: \(vehicleResponce)")
-                let annotations = vehicleResponce.map{ VehicleAnnotationModel(vehicle: $0)}
-                DispatchQueue.main.async {
-                    self.mapAnotaions = annotations
-                    self.loadingLabel?.text = "😍"
-                }
+            case .success(let mapAnnotations):
+                self.mapAnotaions = mapAnnotations
+                self.loadingLabel?.text = "😍"
             case .failure(let error):
-                print(error.localizedDescription)
-                DispatchQueue.main.async {
-                    self.loadingLabel?.text = "Error"
-                }
+                self.loadingLabel?.text = error.localizedDescription
             }
         }
     }
