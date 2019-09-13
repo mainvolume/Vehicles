@@ -45,13 +45,13 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         loadingLabel?.text = "loading"
-        vm.fetchVehicles { result in
+        vm.fetchVehicles { [weak self] result in
             switch result {
             case .success(let mapAnnotations):
-                self.mapAnotaions = mapAnnotations
-                self.loadingLabel?.text = "😍"
+                self?.mapAnotaions = mapAnnotations
+                self?.loadingLabel?.text = "😍"
             case .failure(let error):
-                self.loadingLabel?.text = error.localizedDescription
+                self?.loadingLabel?.text = error.localizedDescription
             }
         }
     }
