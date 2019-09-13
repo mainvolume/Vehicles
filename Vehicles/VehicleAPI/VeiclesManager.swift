@@ -12,7 +12,7 @@ class VeiclesManager {
     
     let api = VehicleAPI()
     
-    func fetchVehicles(cb: @escaping (Result<[VehicleAnnotationModel], API.APIServiceError>) -> Void) {
+    func fetchVehicleAnnotations(cb: @escaping (Result<[VehicleAnnotationModel], API.APIServiceError>) -> Void) {
         api.fetch(from: .vehicles) { (result: Result<Array<Vehicle>, API.APIServiceError>) in
             switch result {
             case .success(let vehicleResponce):

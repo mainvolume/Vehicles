@@ -45,7 +45,7 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         loadingLabel?.text = "loading"
-        vm.fetchVehicles { [weak self] result in
+        vm.fetchVehicleAnnotations { [weak self] result in
             switch result {
             case .success(let mapAnnotations):
                 self?.mapAnotaions = mapAnnotations
