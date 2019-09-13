@@ -47,8 +47,8 @@ class ViewController: UIViewController {
         loadingLabel?.text = "loading"
         viehcles.fetchAnnotations { [weak self] result in
             switch result {
-            case .success(let mapAnnotations):
-                self?.mapAnotaions = mapAnnotations
+            case .success(let viehicleAnnotations):
+                self?.mapAnotaions = viehicleAnnotations
                 self?.loadingLabel?.text = "😍"
             case .failure(let error):
                 self?.loadingLabel?.text = error.localizedDescription
