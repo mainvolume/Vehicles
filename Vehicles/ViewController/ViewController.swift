@@ -23,7 +23,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var loadingLabel: UILabel!
     
-    let vm = VeiclesManager()
+    let viehcles = VeiclesManager()
     
     var mapAnotaions: [VehicleAnnotationModel] = [] {
         didSet {
@@ -45,7 +45,7 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         loadingLabel?.text = "loading"
-        vm.fetchVehicleAnnotations { [weak self] result in
+        viehcles.fetchAnnotations { [weak self] result in
             switch result {
             case .success(let mapAnnotations):
                 self?.mapAnotaions = mapAnnotations
