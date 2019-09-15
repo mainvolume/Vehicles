@@ -23,19 +23,11 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var loadingLabel: UILabel!
     
-    let viehcles = VeiclesManager()
-    
-    var mapAnotaions: [VehicleAnnotationModel] = [] {
-        didSet {
-            if let map = mapView {
-                self.showViehcles(map, annotatitons: mapAnotaions)
-            }
-        }
-    }
+    var viewModel = VeihicleViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        viewModel.delegate = self
         if let map = mapView {
             map.delegate = self
             centerLocationOn(map, location: MapAttributes.initialLocation)
@@ -44,15 +36,19 @@ class ViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        loadingLabel?.text = "loading"
-        viehcles.fetchAnnotations { [weak self] result in
-            switch result {
-            case .success(let viehicleAnnotations):
-                self?.mapAnotaions = viehicleAnnotations
-                self?.loadingLabel?.text = "😍"
-            case .failure(let error):
-                self?.loadingLabel?.text = error.localizedDescription
-            }
+        viewModel.fetchAnnotations()
+    }
+}
+
+extension ViewController: ViehicleViewModelDelegate {
+    
+    func loadingTextUpdated(text: String) {
+         loadingLabel?.text = text
+    }
+    
+    func annotaitonsUpdated(annotatitons: [VehicleAnnotationModel]) {
+        if let map = mapView {
+            self.showViehcles(map, annotatitons: annotatitons)
         }
     }
 }
