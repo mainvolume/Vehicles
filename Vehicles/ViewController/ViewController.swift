@@ -15,6 +15,7 @@ struct MapAttributes {
     static let initialLocation = CLLocation(latitude: 52.5200, longitude: 13.4050)
     static let regionRadius: CLLocationDistance = 3000
     static let annotaionOffset: CGPoint = CGPoint(x: -5, y: 5)
+    static let annotationIdentifier = "veihicle"
 }
 
 class ViewController: UIViewController {
@@ -69,7 +70,7 @@ extension ViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard let annotation = annotation as? VehicleAnnotationModel else { return nil }
-        let identifier = "vehicle"
+        let identifier = MapAttributes.annotationIdentifier
         var view: MKMarkerAnnotationView
         if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
             as? MKMarkerAnnotationView {
