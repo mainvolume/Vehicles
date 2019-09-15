@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		F0E62175232BF51400ABD95D /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E62174232BF51400ABD95D /* API.swift */; };
-		F0E6217B232C094E00ABD95D /* VeiclesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E6217A232C094E00ABD95D /* VeiclesManager.swift */; };
 		F0F3195C232E266C00812A3C /* VehicleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F3195B232E266C00812A3C /* VehicleViewModel.swift */; };
 		F0FB1A0A2316DDE400F00CD2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FB1A092316DDE400F00CD2 /* AppDelegate.swift */; };
 		F0FB1A0C2316DDE400F00CD2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FB1A0B2316DDE400F00CD2 /* ViewController.swift */; };
@@ -35,7 +34,6 @@
 
 /* Begin PBXFileReference section */
 		F0E62174232BF51400ABD95D /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
-		F0E6217A232C094E00ABD95D /* VeiclesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VeiclesManager.swift; sourceTree = "<group>"; };
 		F0F3195B232E266C00812A3C /* VehicleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleViewModel.swift; sourceTree = "<group>"; };
 		F0FB1A062316DDE400F00CD2 /* Vehicles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vehicles.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0FB1A092316DDE400F00CD2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -126,7 +124,6 @@
 		F0FB1A322316E4DE00F00CD2 /* VehicleAPI */ = {
 			isa = PBXGroup;
 			children = (
-				F0E6217A232C094E00ABD95D /* VeiclesManager.swift */,
 				F0FB1A2B2316DE0600F00CD2 /* VehicleAPI.swift */,
 				F0E62174232BF51400ABD95D /* API.swift */,
 				F0FB1A2D2316DE3200F00CD2 /* Vehicle.swift */,
@@ -252,7 +249,6 @@
 				F0FB1A0A2316DDE400F00CD2 /* AppDelegate.swift in Sources */,
 				F0FB1A342316E81A00F00CD2 /* VehicleAnnotatitonModel.swift in Sources */,
 				F0FB1A2E2316DE3200F00CD2 /* Vehicle.swift in Sources */,
-				F0E6217B232C094E00ABD95D /* VeiclesManager.swift in Sources */,
 				F0E62175232BF51400ABD95D /* API.swift in Sources */,
 				F0F3195C232E266C00812A3C /* VehicleViewModel.swift in Sources */,
 			);
