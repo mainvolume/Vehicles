@@ -14,7 +14,6 @@ import MapKit
 struct MapAttributes {
     static let initialLocation = CLLocation(latitude: 52.5200, longitude: 13.4050)
     static let regionRadius: CLLocationDistance = 3000
-    
 }
 
 class ViewController: UIViewController {
