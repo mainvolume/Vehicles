@@ -15,6 +15,13 @@ protocol ViehicleViewModelDelegate: class {
 
 class VeihicleViewModel {
     
+    enum loadinResults: String {
+        case initial = "Hello"
+        case loading = "loading"
+        case loaded = "😍"
+        case error = "Error, no veihicles"
+    }
+    
     let api = VehicleAPI()
     
     weak var delegate:ViehicleViewModelDelegate?
@@ -25,27 +32,27 @@ class VeihicleViewModel {
         }
     }
     
-    var loadingText: String = "" {
+    var loadingText: String = loadinResults.initial.rawValue {
         didSet {
             delegate?.loadingTextUpdated(text: loadingText)
         }
     }
     
     func fetchAnnotations() {
-        self.loadingText = "loading"
+        self.loadingText = loadinResults.initial.rawValue
         api.fetch(from: .vehicles) { (result: Result<Array<Vehicle>, API.APIServiceError>) in
             switch result {
             case .success(let vehicleResponce):
                 print("Success: \(vehicleResponce)")
                 let result = vehicleResponce.map{ VehicleAnnotationModel(vehicle: $0)}
                 DispatchQueue.main.async {
-                    self.loadingText = "😍"
+                    self.loadingText = loadinResults.loaded.rawValue
                     self.delegate?.annotaitonsUpdated(annotatitons: result)
                 }
             case .failure(let error):
                 print(error.localizedDescription)
                 DispatchQueue.main.async {
-                    self.loadingText = "Error, no veihicles"
+                    self.loadingText = loadinResults.error.rawValue
                 }
             }
         }
