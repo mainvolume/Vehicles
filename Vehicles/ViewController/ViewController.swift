@@ -14,6 +14,7 @@ import MapKit
 struct MapAttributes {
     static let initialLocation = CLLocation(latitude: 52.5200, longitude: 13.4050)
     static let regionRadius: CLLocationDistance = 3000
+    static let annotaionOffset: CGPoint = CGPoint(x: -5, y: 5)
 }
 
 class ViewController: UIViewController {
@@ -47,7 +48,7 @@ extension ViewController: ViehicleViewModelDelegate {
     
     func annotaitonsUpdated(annotatitons: [VehicleAnnotationModel]) {
         if let map = mapView {
-            self.showViehcles(map, annotatitons: annotatitons)
+            showViehcles(map, annotatitons: annotatitons)
         }
     }
 }
@@ -77,7 +78,7 @@ extension ViewController: MKMapViewDelegate {
         } else {
             view = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             view.canShowCallout = true
-            view.calloutOffset = CGPoint(x: -5, y: 5)
+            view.calloutOffset = MapAttributes.annotaionOffset
             view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         }
         return view
