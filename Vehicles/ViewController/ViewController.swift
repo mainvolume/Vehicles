@@ -23,7 +23,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var loadingLabel: UILabel!
     
-    var viewModel = VeihicleViewModel()
+    let viewModel = VeihicleViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
